@@ -79,5 +79,5 @@ class DesignExchangeFormat:
         self.cells = res
 
 def _unescape(name: bytes) -> bytes:
-    return name.replace(b'\/', b'/')
+    return name.replace(b'\/', b'/').replace(b'\[', b'[').replace(b'\]', b']')
 

@@ -7,83 +7,100 @@ from itertools import *
 
 # LEF = '/media/data/work/linden_cases/ispd18/ispd18_test1/all-in-one.pblef'
 # DEF = '/media/data/work/linden_cases/ispd18/ispd18_test1/gp.pbdef'
-LEF = '/media/data/work/tmp/f/all-in-one.pblef'
-DEF = '/media/data/work/tmp/f/place_after_drv_before_dp.pbdef'
-LDP_DEF = '/media/data/work/tmp/f/dp.pbdef'
-CTOOLS_DEF = '/media/data/work/tmp/f/ctool.dp.pbdef'
+LEF = '/media/data/work/tmp/b/all-in-one.pblef'
+DEF = '/media/data/work/tmp/b/drv-fix.pbdef'
+LDP_DEF = '/media/data/work/tmp/b/x.pbdef'
+CTOOL_DEF = '/media/data/work/tmp/b/ctool.dp.pbdef'
 
 CONCERNED_CELLS = [
-    b'u_cm3_dpu/u_cm3_dpu_fetch/u_cm3_dpu_fetch_ahbintf/instr_de_reg_13_',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U127',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U66',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U37',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U72',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U80',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U92',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U135',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U189',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U190',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U359',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U244',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U243',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U194',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U198',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U204',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U205',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U34',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U222',
-    b'u_cm3_dpu/u_cm3_dpu_dec/u_cm3_dpu_32bit_dec/U218',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U145',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U314',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U315',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U319',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U322',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U90',
-    b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ctl/U362',
-    b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ctl/U350',
-    b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ctl/U467',
-    b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ctl/U471',
-    b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ctl/U472',
-    b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ctl/U129',
-    b'u_cm3_dpu/u_cm3_dpu_exec/U158',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U42',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U41',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U215',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U18',
-    b'u_cm3_dpu/u_cm3_dpu_dec/U32',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U256',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U257',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U237',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U127',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U139',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U173',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U189',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U99',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U190',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U174',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U310',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U114',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U88',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U87',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U246',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U175',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U211',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U96',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U236',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U179',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U191',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/U244',
-    b'u_cm3_dpu/u_cm3_dpu_regbank/rf_pc_fwd_ex_reg_31_',
+b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ahbintf/addr_adder_in2_ex_reg_26_',
+b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ahbintf/U775',
+b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ahbintf/U776',
+b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ahbintf/U366',
+b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ahbintf/U873',
+b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ahbintf/U874',
+b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ahbintf/U880',
+b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ahbintf/U883',
+b'dpu_ahb_haddrd[30]_88_2',
+b'dpu_ahb_haddrd[30]_87_1',
+b'u_cm3_bus_matrix/u_cm3_mtx_input_stage_dcore/U17',
+b'u_cm3_bus_matrix/u_cm3_mtx_decode_dcore/U33',
+b'u_cm3_bus_matrix/u_cm3_mtx_decode_dcore/U152',
+b'u_cm3_bus_matrix/u_cm3_mtx_decode_dcore/U7',
+b'u_cm3_bus_matrix/dec_dcore_sel_bb_1_1',
+b'u_cm3_bus_matrix/dec_dcore_sel_bb_n1_5_1',
+b'u_cm3_bus_matrix/u_cm3_mtx_bit_master/U421',
+b'u_cm3_bus_matrix/u_cm3_mtx_bit_master/U47',
+b'u_cm3_bus_matrix/u_cm3_mtx_bit_master/U136',
+b'u_cm3_bus_matrix/u_cm3_mtx_decode_dcore/U10',
+b'u_cm3_bus_matrix/u_cm3_mtx_output_stage_dcode/U4',
+b'u_cm3_bus_matrix/u_cm3_mtx_output_stage_dcode/n7_1_1',
+b'u_cm3_bus_matrix/u_cm3_mtx_output_stage_dcode/U7',
+b'u_cm3_bus_matrix/u_cm3_mtx_output_stage_dcode/U5',
+b'u_cm3_bus_matrix/os_dcore_to_dcode_accept_8_1',
+b'u_cm3_bus_matrix/u_cm3_mtx_bit_master/U45',
+b'u_cm3_bus_matrix/u_cm3_mtx_bit_master/U139',
+b'u_cm3_bus_matrix/u_cm3_mtx_bit_master/U74',
+b'u_cm3_bus_matrix/u_cm3_mtx_bit_master/U44',
+b'u_cm3_bus_matrix/u_cm3_mtx_bit_master/U244',
+b'u_cm3_bus_matrix/u_cm3_mtx_decode_dcore/U18',
+b'u_cm3_bus_matrix/u_cm3_mtx_decode_dcore/U9',
+b'u_cm3_bus_matrix/u_cm3_mtx_input_stage_dcore/U67',
+b'u_cm3_bus_matrix/u_cm3_mtx_input_stage_dcore/U3',
+b'mtx_dpu_ahb_haddraccd_9_2',
+b'mtx_dpu_ahb_haddraccd_8_1',
+b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ctl/U104',
+b'u_cm3_dpu/u_cm3_dpu_lsu/u_cm3_dpu_lsu_ctl/U64',
+b'u_cm3_dpu/lsu_rf_wr_d_en_fast_ex_1_1',
+b'u_cm3_dpu/u_cm3_dpu_exec/U31',
+b'u_cm3_dpu/instr_br_pflush_ex[1]_18_1',
+b'u_cm3_dpu/u_cm3_dpu_dec/U68',
+b'u_cm3_dpu/u_cm3_dpu_dec/U71',
+b'u_cm3_dpu/u_cm3_dpu_dec/U183',
+b'u_cm3_dpu/u_cm3_dpu_dec/U34',
+b'u_cm3_dpu/u_cm3_dpu_dec/U43',
+b'u_cm3_dpu/u_cm3_dpu_dec/U65',
+b'u_cm3_dpu/u_cm3_dpu_dec/U41',
+b'u_cm3_dpu/u_cm3_dpu_dec/U215',
+b'u_cm3_dpu/u_cm3_dpu_dec/U18',
+b'u_cm3_dpu/u_cm3_dpu_dec/U32',
+b'u_cm3_dpu/instr_used_word_de_25_2',
+b'u_cm3_dpu/instr_used_word_de_24_1',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U256',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U257',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U237',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U127',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U139',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U173',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U189',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U99',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U190',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U174',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U310',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U114',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U88',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U87',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U246',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U175',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U211',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U96',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U236',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U179',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U191',
+b'u_cm3_dpu/u_cm3_dpu_regbank/U244',
+b'u_cm3_dpu/u_cm3_dpu_regbank/rf_pc_fwd_ex_reg_31_',
 ]
 
 if __name__ == '__main__':
     lef = maoshan.LibraryExchangeFormat(LEF)
     def_ = maoshan.DesignExchangeFormat(lef, DEF)
+    def_.unescape()
     ldp = maoshan.DesignExchangeFormat(lef, LDP_DEF)
-    ctool = maoshan.DesignExchangeFormat(lef, CTOOLS_DEF)
+    ldp.unescape()
+    ctool = maoshan.DesignExchangeFormat(lef, CTOOL_DEF)
+    ctool.unescape()
     assert ldp.die_area == def_.die_area
     assert ctool.die_area == def_.die_area
-    ctool.unescape()
     dg = maoshan.DensityGraph(def_, 30, 30)
     ratio = maoshan.svg_util.ratio(def_)
     palette = [
@@ -133,7 +150,8 @@ if __name__ == '__main__':
     for cell0_name, cell1_name in zip(CONCERNED_CELLS, islice(CONCERNED_CELLS, 1, None)):
         cell0 = ldp.cells[cell0_name]
         cell1 = ldp.cells[cell1_name]
-        # cell0 = ctool.cells[cell0_name]
-        # cell1 = ctool.cells[cell1_name]
         dwg.add(maoshan.svg_util.draw_line(def_.die_area, cell0.geo.center(), cell1.geo.center(), ratio, stroke='blue', fill='none'))
+        cell0 = ctool.cells[cell0_name]
+        cell1 = ctool.cells[cell1_name]
+        dwg.add(maoshan.svg_util.draw_line(def_.die_area, cell0.geo.center(), cell1.geo.center(), ratio, stroke='gray', fill='none'))
     dwg.save()
