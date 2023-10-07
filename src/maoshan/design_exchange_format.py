@@ -78,6 +78,31 @@ class DesignExchangeFormat:
             res[c.name] = c
         self.cells = res
 
+    def core_area(self) -> Rect:
+        llx = None
+        lly = None
+        urx = None
+        ury = None
+        for row in self.def_.rows:
+            row_llx = Distance.from_pm(row.start.x)
+            row_lly = Distance.from_pm(row.start.y)
+            if row.repeat is None:
+                row_urx = row_llx
+                row_ury = row_lly
+            else:
+                row_urx = row_llx + Distance.from_pm(row.repeat.x_num * row.repeat.step.x)
+                row_ury = row_lly + Distance.from_pm(row.repeat.y_num * row.repeat.step.y)
+
+            if llx is None or llx > row_llx:
+                llx = row_llx
+            if lly is None or lly > row_lly:
+                lly = row_lly
+            if urx is None or urx < row_urx:
+                urx = row_urx
+            if ury is None or ury < row_ury:
+                ury = row_ury
+        return Rect(Point(llx, lly), Point(urx, ury))
+
 def _unescape(name: bytes) -> bytes:
     return name.replace(b'\/', b'/').replace(b'\[', b'[').replace(b'\]', b']')
 
