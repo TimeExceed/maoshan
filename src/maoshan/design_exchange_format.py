@@ -52,7 +52,7 @@ class Cell:
         return "%s@%s|%s" % (self.name, self.geo, self.orient)
 
     def unescape(self) -> None:
-        self.name = _unescape(self.name)
+        self.name = unescape(self.name)
 
 class DesignExchangeFormat:
     def __init__(self, lef, filename) -> None:
@@ -103,6 +103,6 @@ class DesignExchangeFormat:
                 ury = row_ury
         return Rect(Point(llx, lly), Point(urx, ury))
 
-def _unescape(name: bytes) -> bytes:
+def unescape(name: bytes) -> bytes:
     return name.replace(b'\/', b'/').replace(b'\[', b'[').replace(b'\]', b']')
 

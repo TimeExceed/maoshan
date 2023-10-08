@@ -111,14 +111,9 @@ if __name__ == '__main__':
         (None, svgwrite.utils.rgb(102,0,0)),
     ]
     dwg = svgwrite.Drawing('test.svg')
-    for g in dg.iter_grids():
-        for d, c in palette:
-            if d is None:
-                color = c
-            elif g.density() < d:
-                color = c
-                break
-        dwg.add(maoshan.svg_util.draw_rect(def_.die_area, g.geo(), ratio, stroke='none', fill=color))
+    for g in dg:
+        color = maoshan.density_color(palette, g.density)
+        dwg.add(maoshan.svg_util.draw_rect(def_.die_area, g.geo, ratio, stroke='none', fill=color))
     for cell_name in CONCERNED_CELLS:
         cell = def_.cells[cell_name]
         ldp_cell = ldp.cells[cell_name]

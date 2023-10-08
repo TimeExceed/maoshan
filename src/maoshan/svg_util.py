@@ -20,3 +20,11 @@ def draw_line(die: Rect, start: Point, end: Point, ratio: Distance, **kwargs) ->
     ex = (end.x - die.lower_left().x) / ratio
     ey = (die.upper_right().y - end.y) / ratio
     return svgwrite.shapes.Line((sx, sy), (ex, ey), **kwargs)
+
+def density_color(palette, density):
+    for d, c in palette:
+        if d is None:
+            return c
+        elif density < d:
+            return c
+    assert False

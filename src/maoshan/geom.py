@@ -9,6 +9,9 @@ class Distance:
     def __str__(self) -> str:
         return str(self._dist)
 
+    def to_float(self) -> float:
+        return self._dist
+
     @classmethod
     def from_pm(cls, pm: float) -> "Distance":
         res = cls()
@@ -71,6 +74,9 @@ class Area:
 
     def __str__(self) -> str:
         return str(self._area)
+
+    def to_float(self) -> float:
+        return self._area
 
     @classmethod
     def from_pm2(cls, pm2: float):
