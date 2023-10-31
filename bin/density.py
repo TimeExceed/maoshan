@@ -9,6 +9,9 @@ LEF = '/media/data/work/tmp/rdp-aniso/all-in-one.pblef'
 DEF = '/media/data/work/tmp/rdp-aniso/place_before_dp.pbdef'
 
 if __name__ == '__main__':
+    if len(sys.argv) > 2:
+        LEF, DEF = sys.argv[1:3]
+
     lef = maoshan.LibraryExchangeFormat(LEF)
     def_ = maoshan.DesignExchangeFormat(lef, DEF)
     def_.unescape()
