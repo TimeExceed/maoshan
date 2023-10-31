@@ -28,3 +28,27 @@ def density_color(palette, density):
         elif density < d:
             return c
     assert False
+
+def draw_palette(dwg: svgwrite.Drawing, die: Rect, ratio: Distance, palette) -> None:
+    w = die.width() / float(len(palette))
+    ll = die.lower_left() - Point(Distance.zero(), die.height() / 30.0 * 2.0)
+    ur = ll + Point(w, die.height() / 30.0)
+    g = Rect(ll, ur)
+    last_text = None
+    for t, c in palette:
+        if last_text is None:
+            text = '<%s' % t
+        elif t is None:
+            text = '>%s' % last_text
+        else:
+            text = '%s-%s' % (last_text, t)
+        dwg.add(draw_rect(die, g, ratio, stroke='none', fill=c))
+        dwg.add(svgwrite.text.Text(
+            text,
+            x = [(g.center().x - die.lower_left().x) / ratio],
+            y = [(die.upper_right().y - g.center().y) / ratio],
+            text_anchor = 'middle',
+            alignment_baseline = 'central',
+        ))
+        g += Point(w, Distance.zero())
+        last_text = t
