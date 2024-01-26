@@ -77,7 +77,7 @@ if __name__ == '__main__':
     print('drawing flows')
     normalize = 10
     for arrow in toml.load(FLOW).get('arrows'):
-        normalize = min(10 / arrow.get('flow'), normalize)
+        normalize = min(5 / arrow.get('flow'), normalize)
     for arrow in toml.load(FLOW).get('arrows'):
         sx = arrow.get('from').get('x').get('value')
         sy = arrow.get('from').get('y').get('value')
@@ -92,7 +92,7 @@ if __name__ == '__main__':
             ratio,
             stroke = 'white',
             fill = 'none',
-            stroke_width = arrow.get('flow') * normalize,
+            stroke_width = max(arrow.get('flow') * normalize, 1),
         )
         elem.set_desc(title=str(arrow.get('flow')))
         line = dwg.add(elem)
