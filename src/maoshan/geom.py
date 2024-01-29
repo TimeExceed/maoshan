@@ -150,6 +150,9 @@ class Point:
     def copy(self):
         return Point(self.x.copy(), self.y.copy())
 
+    def in_rect(self, r):
+        return r.lower_left().x <= self.x and self.x <= r.upper_right().x and r.lower_left().y <= self.y and self.y <= r.upper_right().y
+
     def __eq__(self, v) -> bool:
         return self.x == v.x and self.y == v.y
 

@@ -21,15 +21,15 @@ if __name__ == '__main__':
     marker.viewbox(0,0,10,10)
     marker.add(dwg.path(d="M 0 0 L 10 5 L 0 10 z"))
     dwg.defs.add(marker)
-
+    raw_flow = toml.load(FLOW)
     print('parsing region info')
     regions = OrderedDict()
     ratio = maoshan.svg_util.ratio(def_)
-    for i,rect in enumerate(toml.load(FLOW).get('rects')):
-        llx = rect.get('lower-left').get('x').get('value')
-        lly = rect.get('lower-left').get('y').get('value')
-        urx = rect.get('upper-right').get('x').get('value')
-        ury = rect.get('upper-right').get('y').get('value')
+    for i,rect in enumerate(raw_flow['rects']):
+        llx = rect['lower-left']['x']['value']
+        lly = rect['lower-left']['y']['value']
+        urx = rect['upper-right']['x']['value']
+        ury = rect['upper-right']['y']['value']
         geo = Rect(
             Point(
                 Distance.from_pm(llx),
@@ -76,13 +76,13 @@ if __name__ == '__main__':
 
     print('drawing flows')
     normalize = 10
-    for arrow in toml.load(FLOW).get('arrows'):
-        normalize = min(5 / arrow.get('flow'), normalize)
-    for arrow in toml.load(FLOW).get('arrows'):
-        sx = arrow.get('from').get('x').get('value')
-        sy = arrow.get('from').get('y').get('value')
-        ex = arrow.get('to').get('x').get('value')
-        ey = arrow.get('to').get('y').get('value')
+    for arrow in raw_flow['arrows']:
+        normalize = min(5 / arrow['flow'], normalize)
+    for arrow in raw_flow['arrows']:
+        sx = arrow['from']['x']['value']
+        sy = arrow['from']['y']['value']
+        ex = arrow['to']['x']['value']
+        ey = arrow['to']['y']['value']
         s = Point(Distance.from_pm(sx),Distance.from_pm(sy))
         e = Point(Distance.from_pm(ex),Distance.from_pm(ey))
         elem = maoshan.svg_util.draw_line(
@@ -92,9 +92,9 @@ if __name__ == '__main__':
             ratio,
             stroke = 'white',
             fill = 'none',
-            stroke_width = max(arrow.get('flow') * normalize, 1),
+            stroke_width = max(arrow['flow'] * normalize, 1),
         )
-        elem.set_desc(title=str(arrow.get('flow')))
+        elem.set_desc(title=str(arrow['flow']))
         line = dwg.add(elem)
         line['marker-end'] = marker.get_funciri()
 

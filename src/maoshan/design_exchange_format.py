@@ -20,6 +20,7 @@ class Orient(Enum):
 class Cell:
     def __init__(self, pb_cell, macros) -> None:
         self.name = pb_cell.name
+        self.fixed = pb_cell.place.type == 0
         macro = macros[pb_cell.model_name]
         size = macro.size
         pl = pb_cell.place
