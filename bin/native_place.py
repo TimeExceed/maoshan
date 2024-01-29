@@ -23,7 +23,7 @@ if __name__ == '__main__':
     a_def.unescape()
     regions = list()
     ratio = maoshan.svg_util.ratio(b_def)
-    regions = parse_from_toml((toml.load(FLOW)['rects']))
+    regions = parse_from_toml((toml.load(FLOW)))
     print('label regions to cells')
     cell_in_which_region = OrderedDict()
     for i,cell_name in enumerate(b_def.cells):
