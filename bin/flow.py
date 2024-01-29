@@ -23,31 +23,14 @@ if __name__ == '__main__':
     dwg.defs.add(marker)
     raw_flow = toml.load(FLOW)
     print('parsing region info')
-    regions = OrderedDict()
+    regions = list()
     ratio = maoshan.svg_util.ratio(def_)
-    for i,rect in enumerate(raw_flow['rects']):
-        llx = rect['lower-left']['x']['value']
-        lly = rect['lower-left']['y']['value']
-        urx = rect['upper-right']['x']['value']
-        ury = rect['upper-right']['y']['value']
-        geo = Rect(
-            Point(
-                Distance.from_pm(llx),
-                Distance.from_pm(lly)
-            ),
-            Point(
-                Distance.from_pm(urx),
-                Distance.from_pm(ury)
-            )
-        )
-        regions[i] = Region(i, geo)
-    
+    regions = parse_from_toml(raw_flow)
 
     print('calculating density on region')
     for cell_name in def_.cells:
         cell = def_.cells[cell_name]
-        for r_id in regions:
-            region = regions[r_id]
+        for region in regions:
             if (overlap := cell.geo.overlap(region.geo)) is not None:
                 region.density += overlap.area() / region.geo.area()
     
@@ -61,8 +44,7 @@ if __name__ == '__main__':
     ]
 
     print('drawing regions')
-    for r_id in regions:
-        region = regions[r_id]
+    for region in regions:
         color = maoshan.density_color(palette, region.density)
         elem = maoshan.svg_util.draw_rect(
             def_.die_area,
@@ -97,5 +79,4 @@ if __name__ == '__main__':
         elem.set_desc(title=str(arrow['flow']))
         line = dwg.add(elem)
         line['marker-end'] = marker.get_funciri()
-
     dwg.save()
